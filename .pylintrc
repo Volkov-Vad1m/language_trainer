@@ -1,0 +1,6 @@
+[TYPECHECK]
+generated-members=objects # pylint не знает, что это свойство добавляется к объектам
+
+[MASTER]
+ignore=venv, migrations # auto-generated folders
+
