@@ -1,0 +1,50 @@
+{% extends 'cards/base.html' %}
+{% block content %}
+<h2>Тренировка</h2>
+
+<div id="trainer">
+    <p><strong>Слово:</strong> <span id="word">{{ cards.0.word }}</span></p>
+    <input type="text" id="userInput" placeholder="Введите перевод">
+    <button onclick="checkAnswer()">Проверить</button>
+    <p id="feedback"></p>
+    <hr>
+    <p>Правильных: <span id="correctCount">0</span></p>
+    <p>Неправильных: <span id="wrongCount">0</span></p>
+</div>
+
+<script>
+let cards = {{ cards_json|safe }};
+let index = 0;
+let correct = 0;
+let wrong = 0;
+
+function showCard() {
+    if (index >= cards.length) {
+        document.getElementById('trainer').innerHTML = "<h3>Вы завершили тренировку!</h3>" +
+            `<p>✅ Правильных: ${correct}</p><p>❌ Неправильных: ${wrong}</p>`;
+        return;
+    }
+    document.getElementById('word').innerText = cards[index].word;
+    document.getElementById('userInput').value = "";
+    document.getElementById('feedback').innerText = "";
+}
+
+function checkAnswer() {
+    let userInput = document.getElementById('userInput').value.trim().toLowerCase();
+    let correctAnswer = cards[index].translation.trim().toLowerCase();
+    if (userInput === correctAnswer) {
+        correct++;
+        document.getElementById('feedback').innerText = "✅ Верно!";
+    } else {
+        wrong++;
+        document.getElementById('feedback').innerText = `❌ Неверно. Правильный ответ: ${correctAnswer}`;
+    }
+    document.getElementById('correctCount').innerText = correct;
+    document.getElementById('wrongCount').innerText = wrong;
+    index++;
+    setTimeout(showCard, 1500);
+}
+
+showCard();
+</script>
+{% endblock %}

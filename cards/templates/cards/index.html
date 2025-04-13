@@ -1,0 +1,20 @@
+{% extends 'cards/base.html' %}
+{% block content %}
+<h2>Словарь</h2>
+
+<form method="get">
+    <input type="text" name="q" placeholder="Поиск слова..." value="{{ request.GET.q }}">
+    <button type="submit">Найти</button>
+</form>
+
+<table>
+<tr><th>Слово</th><th>Перевод</th><th>Изображение</th></tr>
+{% for card in cards %}
+<tr>
+    <td>{{ card.word }}</td>
+    <td>{{ card.translation }}</td>
+    <td>{% if card.image_url %}<img src="{{ card.image_url }}" width="50">{% endif %}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
