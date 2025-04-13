@@ -1,9 +1,38 @@
 {% extends 'cards/base.html' %}
 {% block content %}
-<h2>Добавить карточку</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить</button>
-</form>
+
+    <h2 class="mb-4 text-center">Добавить карточку</h2>
+
+    <div class="d-flex justify-content-center">
+        <form method="post" class="bg-white p-4 rounded shadow-sm border" style="width: 100%; max-width: 600px;">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_word" class="form-label">Слово</label>
+                <input type="text" name="word" id="id_word" class="form-control" value="{{ form.word.value|default_if_none:'' }}">
+                {% if form.word.errors %}
+                    <div class="text-danger mt-1">{{ form.word.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_translation" class="form-label">Перевод</label>
+                <input type="text" name="translation" id="id_translation" class="form-control" value="{{ form.translation.value|default_if_none:'' }}">
+                {% if form.translation.errors %}
+                    <div class="text-danger mt-1">{{ form.translation.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_image_url" class="form-label">URL изображения</label>
+                <input type="url" name="image_url" id="id_image_url" class="form-control" value="{{ form.image_url.value|default_if_none:'' }}">
+                {% if form.image_url.errors %}
+                    <div class="text-danger mt-1">{{ form.image_url.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Сохранить</button>
+        </form>
+    </div>
+
 {% endblock %}

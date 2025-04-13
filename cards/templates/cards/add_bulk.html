@@ -1,9 +1,22 @@
 {% extends 'cards/base.html' %}
 {% block content %}
-<h2>Загрузить список слов</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Загрузить</button>
-</form>
+
+    <h2 class="mb-4 text-center">Загрузить список слов</h2>
+
+    <div class="d-flex justify-content-center">
+        <form method="post" class="bg-white p-4 rounded shadow-sm border" style="width: 100%; max-width: 700px;">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_bulk_text" class="form-label">Список карточек</label>
+                <textarea name="bulk_text" id="id_bulk_text" rows="8" class="form-control">{{ form.bulk_text.value|default_if_none:'' }}</textarea>
+                {% if form.bulk_text.errors %}
+                    <div class="text-danger mt-2">{{ form.bulk_text.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Загрузить</button>
+        </form>
+    </div>
+
 {% endblock %}
